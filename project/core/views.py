@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from .models import Event
+import uuid
+
 
 
 def index(request):
@@ -20,6 +22,7 @@ def create_event(request):
         end_date = request.POST.get('end_date')
 
         Event.objects.create(
+            id=uuid.uuid4(),
             name=name,
             description=description,
             location=location,
@@ -27,7 +30,7 @@ def create_event(request):
             end_date=end_date
         )
 
-        return redirect('home')
+        return redirect('index')
 
     return render(request, 'base/create_event.html')
 
@@ -43,7 +46,7 @@ def update_event(request, event_id):
         event.end_date = request.POST.get('end_date')
 
         event.save()
-        return redirect('home')
+        return redirect('index')
 
     return render(request, 'base/update_event.html', {'event': event})
 
@@ -61,4 +64,4 @@ def get_event(request, event_id):
 def delete_event(request, event_id):
     event = get_object_or_404(Event, id=event_id)
     event.delete()
-    return redirect('home')
+    return redirect('index')

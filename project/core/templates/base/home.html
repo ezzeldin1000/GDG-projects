@@ -21,7 +21,6 @@
         <td>{{ event.end_date }}</td>
 
         <td>
-            <a href="{% url 'event_detail' event.id %}">View</a>
             <a href="{% url 'update_event' event.id %}">Edit</a>
             <a href="{% url 'delete_event' event.id %}">Delete</a>
         </td>
